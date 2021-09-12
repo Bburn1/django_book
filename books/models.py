@@ -17,7 +17,7 @@ class Category(models.Model):
         verbose_name_plural = "Категории"
 
 class Avtor(models.Model):
-    """avtor and publishing"""
+    """avtor """
     name = models.CharField("Имя", max_length=150)
     age = models.PositiveSmallIntegerField("Возраст", default=0)
     description = models.TextField("Описание")
@@ -25,8 +25,20 @@ class Avtor(models.Model):
     def __str__(self):
         return self.name
     class Meta:
-        verbose_name = "Автор и издательство"
-        verbose_name_plural = "Авторы и издательства"
+        verbose_name = "Автор"
+        verbose_name_plural = "Авторы "
+
+class Publishing(models.Model):
+    """Publishing House"""
+    name = models.CharField("Имя", max_length=150)
+    description = models.TextField("Описание")
+    image = models.ImageField("Изображение", upload_to="publishing/")
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name = "Издательство"
+        verbose_name_plural = "Издательства"
+
 
 class Genre(models.Model):
     """Genre"""
@@ -51,7 +63,7 @@ class Book(models.Model):
     language = models.CharField("Язык", max_length=150)
     world_publishing = models.DateField("Дата выхода", help_text="Дата издательства книги", default=date.today, blank=True)
     avtors = models.ManyToManyField(Avtor, verbose_name="Авторы", related_name="book_avtor")
-    publishings = models.ManyToManyField(Avtor, verbose_name="Издательства", related_name="book_publishing", blank=True)
+    publishings = models.ManyToManyField(Publishing, verbose_name="Издательства", related_name="book_publishing", blank=True)
     genres = models.ManyToManyField(Genre, verbose_name="Жанры")
 
     category = models.ForeignKey(
