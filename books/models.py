@@ -51,13 +51,24 @@ class Genre(models.Model):
         verbose_name = "Жанр"
         verbose_name_plural = "Жанры"
 
+class Country(models.Model):
+    """страна"""
+    name = models.CharField("Страна", max_length=150)
+    image = models.ImageField("Изображение", upload_to="country/", blank=True)
+
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name = "Страна"
+        verbose_name_plural = "Страны"
+
 class Book(models.Model):
     """books"""
     title = models.CharField("Название", max_length=150)
     description = models.TextField("Описание")
     poster = models.ImageField("Обложка", upload_to="books/")
     year = models.PositiveSmallIntegerField("Год написания", default=2021)
-    country = models.CharField("Страна", max_length=50)
+    countrys = models.ManyToManyField(Country, verbose_name="Страна", related_name="book_country", max_length=50, blank=True)
     isbn = models.CharField("ISBN", help_text="Международный стандартный книжный номер", max_length=150, blank=True)
     pages = models.PositiveIntegerField("Страницы", default=0, blank=True)
     language = models.CharField("Язык", max_length=150)
