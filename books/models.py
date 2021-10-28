@@ -38,8 +38,6 @@ class Publishing(models.Model):
     class Meta:
         verbose_name = "Издательство"
         verbose_name_plural = "Издательства"
-
-
 class Genre(models.Model):
     """Genre"""
     name = models.CharField("Имя", max_length=150)

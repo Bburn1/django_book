@@ -7,20 +7,16 @@
     <title>Website</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- //Meta tag Keywords -->
-    <!-- Custom-Files -->
+
     <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
-    <!-- Bootstrap-Core-CSS -->
-    <!--/ Style-CSS -->
+
     <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css" media="all">
-    <!--// Style-CSS -->
-    <!-- font-awesome-icons -->
+
     <link href="{% static 'css/font-awesome.css'%}" rel="stylesheet">
-    <!-- //font-awesome-icons -->
-  <!-- /Fonts -->
+
     <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
-    <!-- //Fonts -->
+
 </head>
 
 <body>
@@ -32,9 +28,9 @@
                 <div class="container-fluid px-lg-5">
                     <!-- nav -->
                     <nav class="py-4">
-                        <div id="logo">
+                      <<!--  <div id="logo">
                             <h1> <a href="index.html" class="editContent" style="outline: none; outline-offset: -2px; cursor: inherit; color: rgb(255, 255, 255); font-size: 40px; background-color: rgba(0, 0, 0, 0); font-family: &quot;Source Sans Pro & quot;, sans-serif;"></a></h1>
-                        </div>
+                        </div> -->
 
                         <label for="drop" class="toggle">Menu</label>
                         <input type="checkbox" id="drop">
@@ -264,6 +260,7 @@
                     <!-- product right -->
                     <div class="left-ads-display col-lg-9">
                         <div class="row">
+
                             {% for book in book_list %}
                             <div class="col-md-4 product-men">
                                 <div class="product-shoe-info editContent text-center mt-lg-4" >
@@ -277,8 +274,9 @@
 
                                         <div class="product_price">
                                            <!-- <div class="grid-price">
-                                                <span class="money editContent" >«The Game Begins»</span>
-                                            </div>-->
+                                                <span class="money editContent" >{{ book.tagline }}</span>
+                                            </div>      add citatu s filma imao tut
+                                                    -->
                                         </div>
                                         <ul class="stars">
                                             <li><a href="#"><span class="fa fa-star" aria-hidden="true" ></span></a></li>
