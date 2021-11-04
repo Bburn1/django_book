@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import date
 # Create your models here.
+from django.urls import reverse
+
 
 class Category(models.Model):
     # Категории
@@ -38,6 +40,7 @@ class Publishing(models.Model):
     class Meta:
         verbose_name = "Издательство"
         verbose_name_plural = "Издательства"
+
 class Genre(models.Model):
     """Genre"""
     name = models.CharField("Имя", max_length=150)
@@ -83,6 +86,10 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("book_detail", kwargs={"slug": self.url})
+
     class Meta:
         verbose_name = "Книга"
         verbose_name_plural = "Книги"

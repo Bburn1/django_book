@@ -1,20 +1,20 @@
 from django.shortcuts import render
 from django.views.generic.base import View
-
+from django.views.generic import ListView, DetailView
 from .models import Book
 
 
-class BookView(View):
+class BookView(ListView):
     """Список книг"""
-    def get(self, request):
-        books = Book.objects.all()
-        return render(request, "books/books.html", {"book_list": books})
+    model = Book
+    queryset = Book.objects.filter(draft=False)
+    #template_name = "books/book_list.html"
 
-class BookDetailView(View):
+
+class BookDetailView(DetailView):
     """Страница с отображением книги"""
-    def get(self, request, slug):
-        book = Book.objects.get(url=slug)
-        return render(request, "books/book_detail.html", {"book": book})
+    model = Book
+    slug_field = "url"
 
 
 

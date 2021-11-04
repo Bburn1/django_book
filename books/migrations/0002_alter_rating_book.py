@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='rating',
-            name='book',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='books.book', verbose_name='Книга'),
+            name='books',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='books.books', verbose_name='Книга'),
         ),
     ]

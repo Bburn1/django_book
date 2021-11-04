@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             options={'verbose_name': 'Автор', 'verbose_name_plural': 'Авторы '},
         ),
         migrations.AlterField(
-            model_name='book',
+            model_name='books',
             name='publishings',
             field=models.ManyToManyField(blank=True, related_name='book_publishing', to='books.Publishing', verbose_name='Издательства'),
         ),

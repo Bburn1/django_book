@@ -94,7 +94,7 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(max_length=254)),
                 ('name', models.CharField(max_length=150, verbose_name='Мся')),
                 ('text', models.TextField(max_length=3000, verbose_name='Сообщение')),
-                ('book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='books.book', verbose_name='Кнгиа')),
+                ('books', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='books.books', verbose_name='Кнгиа')),
                 ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='books.reviews', verbose_name='Родитель')),
             ],
             options={
@@ -107,7 +107,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('ip', models.CharField(max_length=25, verbose_name='IP')),
-                ('book', models.ForeignKey(on_delete=django.db.models.fields.CharField, to='books.book', verbose_name='Книга')),
+                ('books', models.ForeignKey(on_delete=django.db.models.fields.CharField, to='books.books', verbose_name='Книга')),
                 ('star', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='books.ratingstar', verbose_name='Звезда')),
             ],
             options={
@@ -122,7 +122,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=150, verbose_name='')),
                 ('description', models.TextField(verbose_name='Описание')),
                 ('image', models.ImageField(upload_to='book_shots/', verbose_name='Изображение')),
-                ('book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='books.book', verbose_name='Книга')),
+                ('books', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='books.books', verbose_name='Книга')),
             ],
             options={
                 'verbose_name': 'Страница книги',
@@ -130,17 +130,17 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.AddField(
-            model_name='book',
+            model_name='books',
             name='category',
             field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='books.category', verbose_name='Категория'),
         ),
         migrations.AddField(
-            model_name='book',
+            model_name='books',
             name='genres',
             field=models.ManyToManyField(to='books.Genre', verbose_name='Жанры'),
         ),
         migrations.AddField(
-            model_name='book',
+            model_name='books',
             name='publishings',
             field=models.ManyToManyField(blank=True, related_name='book_publishing', to='books.Avtor', verbose_name='Издательства'),
         ),

@@ -23,11 +23,11 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.RemoveField(
-            model_name='book',
+            model_name='books',
             name='country',
         ),
         migrations.AddField(
-            model_name='book',
+            model_name='books',
             name='countrys',
             field=models.ManyToManyField(blank=True, max_length=50, related_name='book_country', to='books.Country', verbose_name='Страна'),
         ),
