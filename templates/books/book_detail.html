@@ -115,6 +115,7 @@
                                 </div>
                         </div>
                     </div>
+
                     <div class="row sub-para-w3layouts mt-5">
 
                         <h3 class="shop-sing editContent" style="outline: none; cursor: inherit;">
@@ -180,15 +181,16 @@
                             </div>
                             <!--  //contact form grid ends here -->
                         </div>
+                    </div>
                         {% for review in book.reviews_set.all %}
-                        <div class="media py-4">
+                        <div class="media py-4" style="outline: none; cursor: inherit;">>
                             <img src="bundles/images/te2.jpg" class="mr-3 img-fluid" alt="image">
 
                             <div class="media-body mt-4">
-                                <h5 class="mt-0 editContent">
+                                <h5 class="mt-0 editContent" style="outline: none; cursor: inherit;">
                                     {{ review.name }}
                                 </h5>
-                                <p class="mt-2 editContent">
+                                <p class="mt-2 editContent" style="outline: none; cursor: inherit;">
                                     {{ review.text }}
                                 </p>
 {#                                <div class="media mt-5 editContent">#}
