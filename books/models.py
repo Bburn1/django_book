@@ -2,6 +2,8 @@ from django.db import models
 from datetime import date
 # Create your models here.
 from django.urls import reverse
+from django.urls import path
+from django.conf.urls import url
 
 
 class Category(models.Model):
@@ -21,9 +23,9 @@ class Category(models.Model):
 class Avtor(models.Model):
     """avtor """
     name = models.CharField("Имя", max_length=150)
-    age = models.PositiveSmallIntegerField("Возраст", default=0)
+    age = models.DateField("Дата рождения", help_text="Дата", default=date.today, blank=True)
     description = models.TextField("Описание")
-    image = models.ImageField("Изображение", upload_to="avtors/")
+    image = models.ImageField("Изображение", upload_to="avtors/", blank=True)
     def __str__(self):
         return self.name
     class Meta:
@@ -33,8 +35,8 @@ class Avtor(models.Model):
 class Publishing(models.Model):
     """Publishing House"""
     name = models.CharField("Имя", max_length=150)
-    description = models.TextField("Описание")
-    image = models.ImageField("Изображение", upload_to="publishing/")
+    description = models.TextField("Описание", blank=True)
+    image = models.ImageField("Изображение", upload_to="publishing/", blank=True)
     def __str__(self):
         return self.name
     class Meta:
@@ -44,7 +46,7 @@ class Publishing(models.Model):
 class Genre(models.Model):
     """Genre"""
     name = models.CharField("Имя", max_length=150)
-    description = models.TextField("Описание")
+    description = models.TextField("Описание", blank=True)
     url = models.SlugField(max_length=150, unique=True)
     def __str__(self):
         return self.name
@@ -65,15 +67,15 @@ class Country(models.Model):
 
 class Book(models.Model):
     """books"""
-    title = models.CharField("Название", max_length=150)
-    description = models.TextField("Описание")
-    poster = models.ImageField("Обложка", upload_to="books/")
-    year = models.PositiveSmallIntegerField("Год написания", default=2021)
+    title = models.CharField("Назва", max_length=150)
+    description = models.TextField("Опис")
+    poster = models.ImageField("Обложка", upload_to="books/", blank=True)
+    year = models.PositiveSmallIntegerField("Год написания", default=2021, blank=True)
     countrys = models.ManyToManyField(Country, verbose_name="Страна", related_name="book_country", max_length=50, blank=True)
     isbn = models.CharField("ISBN", help_text="Международный стандартный книжный номер", max_length=150, blank=True)
     pages = models.PositiveIntegerField("Страницы", default=0, blank=True)
-    language = models.CharField("Язык", max_length=150)
-    world_publishing = models.DateField("Дата выхода", help_text="Дата издательства книги", default=date.today, blank=True)
+    language = models.CharField("Язык", max_length=150, blank=True)
+    world_publishing = models.CharField("Дата издания кнгиги", blank=True, max_length=50)
     avtors = models.ManyToManyField(Avtor, verbose_name="Авторы", related_name="book_avtor")
     publishings = models.ManyToManyField(Publishing, verbose_name="Издательства", related_name="book_publishing", blank=True)
     genres = models.ManyToManyField(Genre, verbose_name="Жанры")
@@ -89,6 +91,9 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse("book_detail", kwargs={"slug": self.url})
+
+    def get_review(self):
+        return self.reviews_set.filter(parent__isnull=True)
 
     class Meta:
         verbose_name = "Книга"
