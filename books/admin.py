@@ -41,12 +41,14 @@ class ReviewInline(admin.TabularInline):
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     """Книги"""
-    list_display = ("title", "category",  "url", "draft",)
-    list_filter = ("category", "draft", "year", )
+    list_display = ("title", "category",  "url", "draft", )
+    list_filter = ("category", "draft", "year", "avtors", )
     search_fields = ("title", )
     inlines = [ReviewInline]
     save_on_top = True
     save_as = True
+    actions = ["publish", "unpublishg"]
+
     list_editable = ("draft", )
     form = BookAdminForm
     readonly_fields = ("get_image", )
@@ -79,7 +81,35 @@ class BookAdmin(admin.ModelAdmin):
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.poster.url} width="100" height="100"')
 
+    def publish(self, request, queryset):
+        """Опубликовать"""
+        row_update = queryset.update(draft=False)
+        if row_update == 1:
+            message_bit = '1 запись была обновлена'
+        else:
+            message_bit = f"{row_update} записей обновлены"
+        self.message_user(request, f"{message_bit}")
+
+    def unpublishg(self, request, queryset):
+        """Снять с публикации"""
+        row_update = queryset.update(draft=True)
+        if row_update == 1:
+            message_bit = '1 запись была обновлена'
+        else:
+            message_bit = f"{row_update} записей обновлены"
+        self.message_user(request, f"{message_bit}")
+
+
+
+    publish.short_description = "Опубликовать"
+    publish.allowed_permissions = ('change',)
+
+    unpublishg.short_description = "Снять с публикации"
+    unpublishg.allowed_permissions = ('change',)
+
     get_image.short_description = "Постер"
+
+
 
 
 
@@ -88,6 +118,7 @@ class ReviewAdmin(admin.ModelAdmin):
     """Отзывы"""
     list_display = ("name", "email", "parent", "book", "id")
     readonly_fields = ("name", "email", )
+
 
 
 
@@ -103,6 +134,7 @@ class ActorAdmin(admin.ModelAdmin):
     """Авторы"""
     list_display = ("name", "age", "get_image", )
     readonly_fields = ("get_image", )
+    search_fields = ("name", )
 
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} width="50" height="60"')
@@ -121,7 +153,7 @@ class RatingAdmin(admin.ModelAdmin):
 
 @admin.register(BookShots)
 class BookShotsAdmin(admin.ModelAdmin):
-    """Кадры из фильма"""
+    """Кадры из книги"""
     list_display = ("title", "book")
 
 
@@ -135,6 +167,7 @@ class PublishingAdmin(admin.ModelAdmin):
 @admin.register(Country)
 class CountryAdmin(admin.ModelAdmin):
     list_display = ("name", "image", )
+    search_fields = ("name", )
 
 
 
