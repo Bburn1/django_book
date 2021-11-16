@@ -3,7 +3,7 @@ from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
 
 from .forms import ReviewForm
-from .models import Book, Category
+from .models import Book, Category, Avtor, Publishing
 
 
 
@@ -42,6 +42,19 @@ class AddReview(View):
             form.book = book
             form.save()
         return redirect(book.get_absolute_url())
+
+class AvtorView(DetailView):
+    """Информация о авторе"""
+    model = Avtor
+    template_name = 'books/avtor.html'
+    slug_field = "name"
+
+class PublishingView(DetailView):
+    """Информация о издательстве"""
+    model = Publishing
+    template_name = 'books/publishing.html'
+    slug_field = "name"
+
 
 
 

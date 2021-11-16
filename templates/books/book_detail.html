@@ -38,13 +38,16 @@
                                 <li style="list-style: none">
                                     <span><b>Издательство:</b>
                                         {% for publishings in book.publishings.all %}
-                                        {{ publishings.name }}
+                                            <a href="{% url 'publishing_detail' publishings.name %}"> {{ publishings.name }}</a>
+
                                         {% endfor %}
                                     </span></li>
                                 <li style="list-style: none">
                                     <span><b>Автор:</b>
                                         {% for avtors in book.avtors.all %}
-                                    {{ avtors.name }}
+                                            <a href="{% url 'avtor_detail' avtors.name %}">
+                                            {{ avtors.name }}
+                                            </a>
                                         {% endfor %}
                                 </span></li>
                                 <li style="list-style: none"><span>
