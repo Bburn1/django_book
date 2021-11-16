@@ -1,14 +1,21 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
 from django.views.generic import ListView, DetailView
 
 from .forms import ReviewForm
-from .models import Book, Category, Avtor, Publishing
+from .models import Book, Category, Avtor, Publishing, Genre
 
 
+class GenreYear:
+    """Genre and date publishiung books"""
+    def get_genres(self):
+        return Genre.objects.all()
 
+    def get_years(self):
+        return Book.objects.filter(draft=False).values("year").distinct()
 
-class BookView(ListView):
+class BookView(GenreYear, ListView):
     """Список книг"""
     model = Book
     queryset = Book.objects.filter(draft=False)
@@ -20,7 +27,10 @@ class BookView(ListView):
     #     return context
 
 
-class BookDetailView(DetailView):
+
+
+
+class BookDetailView(GenreYear, DetailView):
     """Страница с отображением книги"""
     model = Book
     slug_field = "url"
@@ -43,17 +53,32 @@ class AddReview(View):
             form.save()
         return redirect(book.get_absolute_url())
 
-class AvtorView(DetailView):
+class AvtorView(GenreYear, DetailView):
     """Информация о авторе"""
     model = Avtor
     template_name = 'books/avtor.html'
     slug_field = "name"
 
-class PublishingView(DetailView):
+class PublishingView(GenreYear, DetailView):
     """Информация о издательстве"""
     model = Publishing
     template_name = 'books/publishing.html'
     slug_field = "name"
+
+class FilterBooksView(GenreYear, ListView):
+    """Filter books"""
+    def get_queryset(self):
+        # queryset = Book.objects.filter(
+        #     Q(year__in=self.request.GET.getlist("year")) |
+        #     Q(genres__in=self.request.GET.getlist("genre"))
+        # ).distinct()
+        # return queryset
+        queryset = Book.objects.all()
+        if "year" in self.request.GET:
+            queryset = queryset.filter(year__in=self.request.GET.getlist("year")).distinct()
+        if "genre" in self.request.GET:
+            queryset = queryset.filter(genres__in=self.request.GET.getlist("genre")).distinct()
+        return queryset
 
 
 
