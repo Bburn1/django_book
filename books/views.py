@@ -19,6 +19,7 @@ class BookView(GenreYear, ListView):
     """Список книг"""
     model = Book
     queryset = Book.objects.filter(draft=False)
+    paginate_by = 3
     #template_name = "books/book_list.html"
 
     # def get_context_data(self, *args, **kwargs):
@@ -73,13 +74,20 @@ class FilterBooksView(GenreYear, ListView):
         #     Q(genres__in=self.request.GET.getlist("genre"))
         # ).distinct()
         # return queryset
+        paginate_by = 2
         queryset = Book.objects.all()
+
         if "year" in self.request.GET:
             queryset = queryset.filter(year__in=self.request.GET.getlist("year")).distinct()
         if "genre" in self.request.GET:
             queryset = queryset.filter(genres__in=self.request.GET.getlist("genre")).distinct()
         return queryset
 
+    def get_context_data(self, *agrs, **kwargs):
+        context = super().get_context_data(*agrs, **kwargs)
+        context["year"] = ''.join([f"year={x}&" for x in self.request.GET.getlist("year")])
+        context["genre"] = ''.join([f"genre={x}&" for x in self.request.GET.getlist("genre")])
+        return context
 
 
 

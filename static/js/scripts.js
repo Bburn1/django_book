@@ -1,16 +1,17 @@
-// function ajaxSend(url, params) {
-//     // Отправляем запрос
-//     fetch(`${url}?${params}`, {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded',
-//         },
-//     })
-//         .then(response => response.json())
-//         .then(json => render(json))
-//         .catch(error => console.error(error))
-// }
-//
+function ajaxSend(url, params) {
+    // Отправляем запрос
+    fetch(`${url}?${params}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    })
+        .then(response => response.json())
+        .then(json => render(json))
+        .catch(error => console.error(error))
+}
+
+// Filter movies
 // const forms = document.querySelector('form[name=filter]');
 //
 // forms.addEventListener('submit', function (e) {
@@ -20,18 +21,18 @@
 //     let params = new URLSearchParams(new FormData(this)).toString();
 //     ajaxSend(url, params);
 // });
-//
-// function render(data) {
-//     // Рендер шаблона
-//     let template = Hogan.compile(html);
-//     let output = template.render(data);
-//
-//     const div = document.querySelector('.left-ads-display>.row');
-//     div.innerHTML = output;
-// }
-//
+
+function render(data) {
+    // Рендер шаблона
+    let template = Hogan.compile(html);
+    let output = template.render(data);
+
+    const div = document.querySelector('.left-ads-display>.row');
+    div.innerHTML = output;
+}
+
 // let html = '\
-// {{#books}}\
+// {{#movies}}\
 //     <div class="col-md-4 product-men">\
 //         <div class="product-shoe-info editContent text-center mt-lg-4">\
 //             <div class="men-thumb-item">\
@@ -56,4 +57,19 @@
 //             </div>\
 //         </div>\
 //     </div>\
-// {{/books}}'
+// {{/movies}}'
+
+
+// // Add star rating
+// const rating = document.querySelector('form[name=rating]');
+//
+// rating.addEventListener("change", function (e) {
+//     // Получаем данные из формы
+//     let data = new FormData(this);
+//     fetch(`${this.action}`, {
+//         method: 'POST',
+//         body: data
+//     })
+//         .then(response => alert("Рейтинг установлен"))
+//         .catch(error => alert("Ошибка"))
+// });
