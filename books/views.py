@@ -68,13 +68,14 @@ class PublishingView(GenreYear, DetailView):
 
 class FilterBooksView(GenreYear, ListView):
     """Filter books"""
+    paginate_by = 3
     def get_queryset(self):
         # queryset = Book.objects.filter(
         #     Q(year__in=self.request.GET.getlist("year")) |
         #     Q(genres__in=self.request.GET.getlist("genre"))
         # ).distinct()
         # return queryset
-        paginate_by = 2
+
         queryset = Book.objects.all()
 
         if "year" in self.request.GET:
@@ -87,6 +88,15 @@ class FilterBooksView(GenreYear, ListView):
         context = super().get_context_data(*agrs, **kwargs)
         context["year"] = ''.join([f"year={x}&" for x in self.request.GET.getlist("year")])
         context["genre"] = ''.join([f"genre={x}&" for x in self.request.GET.getlist("genre")])
+        return context
+
+class Search(GenreYear, ListView):
+    def get_queryset(self):
+        return Book.objects.filter(title__iregex=self.request.GET.get("q"))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["q"] = f'{self.request.GET.get("q")}&'
         return context
 
 
