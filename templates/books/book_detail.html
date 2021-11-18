@@ -62,14 +62,24 @@
                                 </li>
                                 <li style="list-style: none">
                                     <span><b>Язык :</b>
+      {{ book.language }}
 
-                                    {{ book.language }}
 
                                     </span></li>
                                 <li style="list-style: none">
                                     <span><b>Количество страниц:</b> {{ book.pages }}</span></li>
                                 <li style="list-style: none"><span><b>Номер ISBN:</b> {{ book.isbn }}</span>
                                 </li>
+
+                            <li style="list-style: none">
+                                    <span><b>Скачать :</b>
+
+                                        <a href="{{ book.ebook_url  }}" download="book" >Cкачать файл</a>
+
+
+                                    </span></li>
+
+
 {#                                <li style="list-style: none">#}
 {#                                    <a href="#"><b>Рейтинг:</b>#}
 {#                                    <span class="fa fa-star" aria-hidden="true"#}

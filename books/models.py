@@ -78,6 +78,8 @@ class Book(models.Model):
     world_publishing = models.CharField("Дата издания кнгиги", blank=True, max_length=50)
     avtors = models.ManyToManyField(Avtor, verbose_name="Авторы", related_name="book_avtor")
     publishings = models.ManyToManyField(Publishing, verbose_name="Издательства", related_name="book_publishing", blank=True)
+    ebook = models.FileField("Електронная книга", upload_to="ebooks/", blank=True)
+
     genres = models.ManyToManyField(Genre, verbose_name="Жанры")
 
     category = models.ForeignKey(
@@ -94,6 +96,12 @@ class Book(models.Model):
 
     def get_review(self):
         return self.reviews_set.filter(parent__isnull=True)
+
+    def ebook_url(self):
+        if self.ebook and hasattr(self.ebook, 'url'):
+            return self.ebook.url
+        else:
+            return "/media/ebooks/readme.txt"
 
     class Meta:
         verbose_name = "Книга"

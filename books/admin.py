@@ -60,7 +60,7 @@ class BookAdmin(admin.ModelAdmin):
             "fields": (("description", ),)
         }),
         (None, {
-            "fields": (("poster", "get_image",),)
+            "fields": (("poster", "get_image", "ebook"),)
         }),
         (None, {
             "fields": (("countrys", "language", ),)
